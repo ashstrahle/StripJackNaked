@@ -1,4 +1,4 @@
-﻿<Properties StartupConfiguration="{FD2FB25C-F802-4614-8B99-DF92BF48F6DC}|Default">
+﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{FD2FB25C-F802-4614-8B99-DF92BF48F6DC}|Default">
   <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
