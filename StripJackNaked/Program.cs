@@ -102,13 +102,13 @@ namespace StripJackNaked
 
 
                 // Show some output
-                Console.WriteLine("Player 0: ");
+                Console.WriteLine("Player 0:");
                 ShowList(Players[0].Hand);
 
-                Console.WriteLine("Player 1: ");
+                Console.WriteLine("Player 1:");
                 ShowList(Players[1].Hand);
 
-                Console.WriteLine("Kitty");
+                Console.WriteLine("Kitty:");
                 ShowList(Kitty.Pile);
 
                 Console.WriteLine("---------------------");
