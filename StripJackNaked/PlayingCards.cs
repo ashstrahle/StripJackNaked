@@ -1,43 +1,18 @@
-﻿namespace Cards
+﻿namespace PlayingCards
 {
-    public enum Suit
-    {
-        Spades,
-        Clubs,
-        Diamonds,
-        Hearts
-    }
+    public enum Suit { Spades, Clubs, Diamonds, Hearts }
 
-    public enum PictureCard
-    {
-        Jack = 1,
-        Queen,
-        King,
-        Ace
-    }
+    public enum PictureCard { Jack = 1, Queen, King, Ace }
 
     public class Card
     {
         public string Value;
         public Suit Suit;
-        public string NamedValue
-        {
-            get => Value + " of " + Suit;
-        }
-        public Boolean IsPicture
-        {
-            get => Enum.IsDefined(typeof(PictureCard), Value);
-        }
-
-        public Boolean IsBlack
-        {
-            get => (Enum.GetName(Suit) == "Spades" || Enum.GetName(Suit) == "Clubs");
-        }
-
-        public Boolean IsRed
-        {
-            get => (Enum.GetName(Suit) == "Diamonds" || Enum.GetName(Suit) == "Hearts");
-        }
+        public string NamedValue => Value + " of " + Suit;
+        public bool IsPicture => Enum.IsDefined(typeof(PictureCard), Value);
+        public bool IsNumber => !Enum.IsDefined(typeof(PictureCard), Value);
+        public bool IsBlack  => (Enum.GetName(Suit) == "Spades" || Enum.GetName(Suit) == "Clubs");
+        public bool IsRed => (Enum.GetName(Suit) == "Diamonds" || Enum.GetName(Suit) == "Hearts");
     }
 
     public class Deck
@@ -68,8 +43,8 @@
                 }
             }
         }
-        private static Random rng = new();
 
+        private static Random rng = new();
         public static void Shuffle()
         {
             Cards = Cards.OrderBy(a => rng.Next()).ToList();
@@ -78,7 +53,7 @@
 
     public class Actions
     {
-        public static Boolean MoveCard(List<Card> From, List<Card> To, Card card = null)
+        public static bool MoveCard(List<Card> From, List<Card> To, Card card = null)
         {
             if (From.Count() == 0)
             {
@@ -86,7 +61,9 @@
             }
 
             if (card is null)
-                card = From.FirstOrDefault();
+            {
+                card = From.FirstOrDefault(); // FIFO
+            }
 
             if (From.Contains(card) && !To.Contains(card))
             {
@@ -94,7 +71,7 @@
                 From.Remove(card);
                 return true;
             }
-            return false;
+            return false; // If we're here, something went bang
         }
     }
 }

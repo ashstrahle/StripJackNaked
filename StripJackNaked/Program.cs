@@ -1,8 +1,8 @@
-﻿using Cards;
+﻿using PlayingCards;
 
 namespace StripJackNaked
 {
-    static class Constants
+    internal static class Constants
     {
         public const int PlayerCount = 2;
     }
@@ -19,38 +19,35 @@ namespace StripJackNaked
 
     class Program
     {
-        public static int NextPlayer(int CurrentPlayer)
-        {
-            return ++CurrentPlayer % Constants.PlayerCount;
-        }
+        public static int NextPlayer(int CurrentPlayer) { return ++CurrentPlayer % Constants.PlayerCount; }
 
-        public static Boolean PlayCard(List<Card> From)
-        {
-            return Actions.MoveCard(From, Kitty.Pile);
-        }
+        public static bool PlayCard(List<Card> From) { return Actions.MoveCard(From, Kitty.Pile); }
 
-        public static void TakePile(List<Card>Winner)
+        public static void TakePile(List<Card> Winner)
         {
             while (Kitty.Pile.Count() > 0)
             {
-                Actions.MoveCard(Kitty.Pile, Winner);
+                _ = Actions.MoveCard(Kitty.Pile, Winner);
             }
         }
 
-        public static void ShowList(List<Card>Cards)
+        public static void ShowList(List<Card> Cards)
         {
             foreach (Card card in Cards)
+            {
                 Console.Write(card.NamedValue + ((card == Cards.LastOrDefault()) ? "" : ", "));
-
+            }
             Console.WriteLine();
         }
 
-        static void Main()
+        private static void Main()
         {
             // Init players
             List<Player> Players = new();
             for (int i = 0; i < Constants.PlayerCount; i++)
+            {
                 Players.Add(new Player());
+            }
 
             // Init deck
             Deck.Enumerate();
@@ -61,9 +58,8 @@ namespace StripJackNaked
             {
                 Card card = Deck.Cards.Last();
                 int player = Deck.Cards.Count() % Constants.PlayerCount; // Alternate between players 0 and 1
-                Actions.MoveCard(Deck.Cards, Players[player].Hand);
+                _ = Actions.MoveCard(Deck.Cards, Players[player].Hand, card);
             }
-
 
             // Init first round
             int CardsToDraw = 1;
@@ -82,10 +78,11 @@ namespace StripJackNaked
                     CardsToDraw = (int)Enum.Parse(typeof(PictureCard), ActivePictureCard.Value); // Cards to draw correlates to PictureCard enum value
                     ActivePlayer = NextPlayer(ActivePlayer);
                 }
-                else
-                    if (ActivePictureCard is not null)
-                        // Active player didn't play a picture card when needed to
-                        CardsToDraw--;
+                else if (ActivePictureCard is not null)
+                {
+                    // Active player didn't play a picture card when needed to
+                    CardsToDraw--;
+                }
 
                 if (CardsToDraw < 1)
                 {
@@ -98,17 +95,18 @@ namespace StripJackNaked
                 }
 
                 if (ActivePictureCard is null)
+                {
                     ActivePlayer = NextPlayer(ActivePlayer);
-
+                }
 
                 // Show some output
-                Console.WriteLine("Player 0:");
+                Console.Write("Player 0: ");
                 ShowList(Players[0].Hand);
 
-                Console.WriteLine("Player 1:");
+                Console.Write("Player 1: ");
                 ShowList(Players[1].Hand);
 
-                Console.WriteLine("Kitty:");
+                Console.Write("Kitty: ");
                 ShowList(Kitty.Pile);
 
                 Console.WriteLine("---------------------");
