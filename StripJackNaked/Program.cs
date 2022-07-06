@@ -57,7 +57,7 @@ namespace StripJackNaked
             while (Deck.Cards.Count > 0)
             {
                 Card card = Deck.Cards.Last();
-                int player = Deck.Cards.Count() % Constants.PlayerCount; // Alternate between players 0 and 1
+                int player = Deck.Cards.Count() % Constants.PlayerCount; // Alternate dealing cards between players 0 and 1
                 _ = Actions.MoveCard(Deck.Cards, Players[player].Hand, card);
             }
 
