@@ -7,39 +7,18 @@ namespace StripJackNaked
         public const int PlayerCount = 2;
     }
 
-    public class Kitty
+    internal class Kitty
     {
         public static List<Card> Pile = new();
     }
 
-    public class Player
+    internal class Player
     {
         public List<Card> Hand = new();
     }
 
-    class Program
+    internal class Program
     {
-        public static int NextPlayer(int CurrentPlayer) { return ++CurrentPlayer % Constants.PlayerCount; }
-
-        public static bool PlayCard(List<Card> From) { return Actions.MoveCard(From, Kitty.Pile); }
-
-        public static void TakePile(List<Card> Winner)
-        {
-            while (Kitty.Pile.Count() > 0)
-            {
-                _ = Actions.MoveCard(Kitty.Pile, Winner);
-            }
-        }
-
-        public static void ShowList(List<Card> Cards)
-        {
-            foreach (Card card in Cards)
-            {
-                Console.Write(card.NamedValue + ((card == Cards.LastOrDefault()) ? "" : ", "));
-            }
-            Console.WriteLine();
-        }
-
         private static void Main()
         {
             // Init players
@@ -63,7 +42,7 @@ namespace StripJackNaked
 
             // Init first round
             int CardsToDraw = 1;
-            Card ActivePictureCard = null;
+            Card? ActivePictureCard = null;
 
             int ActivePlayer = 0; // Player 0 goes first
 
@@ -112,6 +91,33 @@ namespace StripJackNaked
                 Console.WriteLine("---------------------");
             }
             Console.WriteLine("Player " + NextPlayer(ActivePlayer) + " Won!");
+        }
+
+        private static int NextPlayer(int CurrentPlayer)
+        {
+            return ++CurrentPlayer % Constants.PlayerCount;
+        }
+
+        private static bool PlayCard(List<Card> From)
+        {
+            return Actions.MoveCard(From, Kitty.Pile);
+        }
+
+        private static void TakePile(List<Card> Winner)
+        {
+            while (Kitty.Pile.Count() > 0)
+            {
+                _ = Actions.MoveCard(Kitty.Pile, Winner);
+            }
+        }
+
+        private static void ShowList(List<Card> Cards)
+        {
+            foreach (Card card in Cards)
+            {
+                Console.Write(card.NamedValue + ((card == Cards.LastOrDefault()) ? "" : ", "));
+            }
+            Console.WriteLine();
         }
     }
 }
