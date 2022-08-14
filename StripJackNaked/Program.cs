@@ -1,4 +1,4 @@
-﻿using PlayingCardsLibrary;
+﻿using PlayingCards;
 
 namespace StripJackNaked
 {
