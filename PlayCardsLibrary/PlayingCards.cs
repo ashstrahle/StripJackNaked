@@ -17,8 +17,8 @@
 
     public class Deck
     {
-        public static List<Card> Cards = new();
-        public static void Enumerate()
+        public List<Card> Cards = new();
+        public Deck()
         {
             foreach (Suit suit in Enum.GetValues(typeof(Suit)))
             {
@@ -42,10 +42,11 @@
                     });
                 }
             }
+            Shuffle();
         }
 
         private static Random rng = new();
-        public static void Shuffle()
+        public void Shuffle()
         {
             Cards = Cards.OrderBy(a => rng.Next()).ToList();
         }
