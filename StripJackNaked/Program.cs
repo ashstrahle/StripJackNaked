@@ -21,6 +21,8 @@ namespace StripJackNaked
     {
         private static void Main()
         {
+            Deck deck = new();
+
             // Init players
             List<Player> Players = new();
             for (int i = 0; i < Constants.PlayerCount; i++)
@@ -29,15 +31,15 @@ namespace StripJackNaked
             }
 
             // Init deck
-            Deck.Enumerate();
-            Deck.Shuffle();
+            //Deck.Enumerate();
+            // Deck.Shuffle();
 
             // Deal cards
-            while (Deck.Cards.Count > 0)
+            while (deck.Cards.Count > 0)
             {
-                Card card = Deck.Cards.Last();
-                int player = Deck.Cards.Count() % Constants.PlayerCount; // Alternate dealing cards between players 0 and 1
-                _ = Actions.MoveCard(Deck.Cards, Players[player].Hand, card);
+                Card card = deck.Cards.Last();
+                int player = deck.Cards.Count() % Constants.PlayerCount; // Alternate dealing cards between players 0 and 1
+                _ = Actions.MoveCard(deck.Cards, Players[player].Hand, card);
             }
 
             // Init first round
