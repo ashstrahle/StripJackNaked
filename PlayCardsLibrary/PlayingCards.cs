@@ -1,4 +1,4 @@
-﻿namespace PlayingCardsLibrary
+﻿namespace PlayingCards
 {
     public enum Suit { Spades, Clubs, Diamonds, Hearts }
 
